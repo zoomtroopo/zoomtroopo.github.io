@@ -5,26 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Book Review - Sign in/up</title>
     <style>
-      /* Google Fonts */
-      @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
-      @import url("https://fonts.googleapis.com/css?family=Roboto:500");
+      /* Fonts */
+      @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+      @import url('https://fonts.googleapis.com/css?family=Roboto:500');
 
-      /* Global Styles */
+      /* Global Reset & Base */
+      * {
+        box-sizing: border-box;
+      }
       body {
         margin: 0;
-        font-family: "Montserrat", sans-serif;
-        background: #f3f4f6;
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+        background-size: 20px 20px;
+        background-position: -1px -1px;
       }
-      h1,
-      h2 {
-        margin: 0;
+      button:focus {
+        outline: none;
       }
-      h2 {
-        font-size: 24px;
-        font-weight: bold;
-        color: #374151;
-        margin-bottom: 24px;
+      button:active {
+        transform: scale(0.95);
       }
+
+      /* Wrapper */
       .container-wrapper {
         display: flex;
         flex-direction: column;
@@ -32,18 +37,27 @@
         justify-content: center;
         min-height: 100vh;
         padding: 16px;
-        background: #f3f4f6;
+        background: #f3f4f6; /* Tailwind gray-100 */
       }
-      /* Main container */
+      h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #374151; /* Tailwind gray-800 */
+        margin-bottom: 24px;
+      }
+
+      /* Main Container */
       .container {
         position: relative;
-        width: 800px;
+        width: 100%;
+        max-width: 800px;
         min-height: 480px;
         background: #fff;
-        border-radius: 12px;
+        border-radius: 1rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         overflow: hidden;
       }
+
       /* Form Containers */
       .form-container {
         position: absolute;
@@ -61,7 +75,6 @@
         opacity: 0;
         z-index: 1;
       }
-      /* Toggle active state */
       .container.right-panel-active .sign-in-container {
         transform: translateX(100%);
       }
@@ -81,6 +94,7 @@
           z-index: 5;
         }
       }
+
       /* Overlay Container */
       .overlay-container {
         position: absolute;
@@ -96,15 +110,14 @@
         transform: translateX(-100%);
       }
       .overlay {
-        background: linear-gradient(to right, #4b5563, #1f2937);
+        background: linear-gradient(to right, #374151, #1F2937); /* from gray-700 to gray-800 */
         background-size: cover;
         background-position: center;
         color: #fff;
         position: relative;
         left: -100%;
-        height: 100%;
         width: 200%;
-        transform: translateX(0);
+        height: 100%;
         transition: transform 0.6s ease-in-out;
       }
       .container.right-panel-active .overlay {
@@ -112,15 +125,15 @@
       }
       .overlay-panel {
         position: absolute;
+        top: 0;
+        height: 100%;
+        width: 50%;
+        padding: 40px;
+        text-align: center;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 40px;
-        text-align: center;
-        top: 0;
-        height: 100%;
-        width: 50%;
         transition: transform 0.6s ease-in-out;
       }
       .overlay-left {
@@ -136,15 +149,16 @@
       .container.right-panel-active .overlay-right {
         transform: translateX(20%);
       }
-      /* Form Styles */
+
+      /* Form Elements */
       form {
         background: #fff;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 48px;
-        height: 100%;
         text-align: center;
       }
       form input {
@@ -154,26 +168,6 @@
         border: 1px solid #ddd;
         border-radius: 8px;
         font-size: 14px;
-      }
-      form button {
-        border: none;
-        border-radius: 50px;
-        padding: 12px 24px;
-        background: linear-gradient(to right, #374151, #1f2937);
-        color: #fff;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-        margin-top: 16px;
-      }
-      form button:hover {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
-      .ghost {
-        background: transparent;
-        border: 1px solid #fff;
       }
       .input-container {
         position: relative;
@@ -193,45 +187,85 @@
         text-decoration: none;
         margin: 16px 0;
       }
-      footer {
-        text-align: center;
-        background: #1f2937;
+
+      /* Action Buttons for Sign In/Up (filled gradient style) */
+      .action-button {
+        border: 1px solid #374151;
+        border-radius: 9999px;
+        background: linear-gradient(to right, #374151, #1F2937);
         color: #fff;
         font-size: 14px;
-        padding: 8px 0;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
+        font-weight: bold;
+        padding: 12px 40px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: transform 80ms ease-in, box-shadow 80ms ease-in;
+        cursor: pointer;
+        margin-top: 16px;
       }
+      .action-button:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+      .action-button:active {
+        transform: scale(0.95);
+      }
+      .action-button:focus {
+        outline: none;
+      }
+
+      /* Ghost Button for overlay panels */
+      .ghost {
+        border: 1px solid #fff;
+        border-radius: 9999px;
+        background: transparent;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 8px 40px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: background 0.3s;
+        cursor: pointer;
+        margin-top: 16px;
+      }
+      .ghost:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .ghost:focus {
+        outline: none;
+      }
+
       /* Google Sign-In Button Styles */
       .gsi-material-button {
-        user-select: none;
-        appearance: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        -webkit-appearance: none;
         background-color: #f2f2f2;
+        background-image: none;
         border: none;
         border-radius: 20px;
         box-sizing: border-box;
         color: #1f1f1f;
         cursor: pointer;
-        font-family: "Roboto", sans-serif;
+        font-family: 'Roboto', arial, sans-serif;
         font-size: 14px;
         height: 40px;
         letter-spacing: 0.25px;
-        outline: none;
         overflow: hidden;
         padding: 0 12px;
         position: relative;
         text-align: center;
         transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
-        vertical-align: middle;
         white-space: nowrap;
         width: 100%;
         max-width: 400px;
+        margin: auto;
       }
       .gsi-material-button .gsi-material-button-icon {
         height: 20px;
-        margin-right: 12px;
         width: 20px;
+        margin-right: 12px;
         display: inline-block;
       }
       .gsi-material-button .gsi-material-button-content-wrapper {
@@ -272,11 +306,23 @@
       }
       .gsi-material-button:not(:disabled):hover {
         box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3),
-          0 1px 3px rgba(60, 64, 67, 0.15);
+                    0 1px 3px rgba(60, 64, 67, 0.15);
       }
       .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
         background-color: #001d35;
         opacity: 0.08;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        background: #1F2937;
+        color: #fff;
+        font-size: 14px;
+        padding: 8px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
       }
     </style>
   </head>
@@ -294,99 +340,51 @@
                 <div class="gsi-material-button-content-wrapper">
                   <div class="gsi-material-button-icon">
                     <!-- Google Icon -->
-                    <svg
-                      version="1.1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 48 48"
-                      style="display: block"
-                      width="20"
-                      height="20"
-                    >
-                      <path
-                        fill="#EA4335"
-                        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
-                      ></path>
-                      <path
-                        fill="#4285F4"
-                        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
-                      ></path>
-                      <path
-                        fill="#FBBC05"
-                        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
-                      ></path>
-                      <path
-                        fill="#34A853"
-                        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
-                      ></path>
-                      <path fill="none" d="M0 0h48v48H0z"></path>
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20">
+                      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                      <path fill="none" d="M0 0h48v48H0z"/>
                     </svg>
                   </div>
-                  <span class="gsi-material-button-contents">
-                    Continue with Google
-                  </span>
+                  <span class="gsi-material-button-contents">Continue with Google</span>
                   <span style="display: none;">Continue with Google</span>
                 </div>
               </button>
             </div>
-            <span
-              style="font-size: 14px; color: #6b7280; margin-bottom: 8px; display: block;"
-              >or use your email for registration</span
-            >
+            <span style="font-size: 14px; color: #6b7280; margin-bottom: 8px; display: block;">
+              or use your email for registration
+            </span>
             <div class="input-container">
               <!-- User Icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
-                <circle cx="12" cy="7" r="4" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M4 21v-2a4 4 0 0 1 3-3.87"/>
+                <circle cx="12" cy="7" r="4"/>
               </svg>
               <input type="text" placeholder="Name" />
             </div>
             <div class="input-container">
               <!-- Mail Icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="5" width="18" height="14" rx="2" ry="2" />
-                <polyline points="3 7 12 13 21 7" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="18" height="14" rx="2" ry="2"/>
+                <polyline points="3 7 12 13 21 7"/>
               </svg>
               <input type="email" placeholder="Email" />
             </div>
             <div class="input-container">
               <!-- Lock Icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
               <input type="password" placeholder="Password" />
             </div>
-            <button type="button">Sign Up</button>
+            <button type="button" class="action-button">Sign Up</button>
           </form>
         </div>
+
         <!-- Sign In Container -->
         <div class="form-container sign-in-container">
           <form>
@@ -397,173 +395,76 @@
                 <div class="gsi-material-button-content-wrapper">
                   <div class="gsi-material-button-icon">
                     <!-- Google Icon -->
-                    <svg
-                      version="1.1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 48 48"
-                      style="display:block"
-                      width="20"
-                      height="20"
-                    >
-                      <path
-                        fill="#EA4335"
-                        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
-                      ></path>
-                      <path
-                        fill="#4285F4"
-                        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
-                      ></path>
-                      <path
-                        fill="#FBBC05"
-                        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
-                      ></path>
-                      <path
-                        fill="#34A853"
-                        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
-                      ></path>
-                      <path fill="none" d="M0 0h48v48H0z"></path>
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20">
+                      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                      <path fill="none" d="M0 0h48v48H0z"/>
                     </svg>
                   </div>
-                  <span class="gsi-material-button-contents">
-                    Continue with Google
-                  </span>
+                  <span class="gsi-material-button-contents">Continue with Google</span>
                   <span style="display: none;">Continue with Google</span>
                 </div>
               </button>
             </div>
-            <span
-              style="font-size: 14px; color: #6b7280; margin-bottom: 8px; display: block;"
-              >or use your account</span
-            >
+            <span style="font-size: 14px; color: #6b7280; margin-bottom: 8px; display: block;">
+              or use your account
+            </span>
             <div class="input-container">
               <!-- Mail Icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="5" width="18" height="14" rx="2" ry="2" />
-                <polyline points="3 7 12 13 21 7" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="18" height="14" rx="2" ry="2"/>
+                <polyline points="3 7 12 13 21 7"/>
               </svg>
               <input type="email" placeholder="Email" />
             </div>
             <div class="input-container">
               <!-- Lock Icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
               <input type="password" placeholder="Password" />
             </div>
             <a href="#">Forgot your password?</a>
-            <button type="button">Sign In</button>
+            <button type="button" class="action-button">Sign In</button>
           </form>
         </div>
+
         <!-- Overlay Container -->
         <div class="overlay-container">
           <div class="overlay">
+            <!-- Overlay Left Panel -->
             <div class="overlay-panel overlay-left">
-              <div
-                style="
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  bottom: 0;
-                  background: rgba(255, 255, 255, 0.1);
-                "
-              ></div>
+              <div style="position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(255,255,255,0.1);"></div>
               <div style="position: relative; z-index: 10;">
-                <div
-                  style="
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 8px;
-                    background: rgba(255, 255, 255, 0.1);
-                    border-radius: 50%;
-                    margin-bottom: 16px;
-                  "
-                >
-                  <!-- BookOpen Icon -->
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M2 7h20v34H2z" />
-                    <path d="M24 7h20v34H24z" />
+                <div style="display: inline-flex; align-items: center; justify-content: center; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 50%; margin-bottom: 16px;">
+                  <!-- Book Icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 7h20v34H2z"/>
+                    <path d="M24 7h20v34H24z"/>
                   </svg>
                 </div>
-                <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">
-                  Welcome Back!
-                </h1>
+                <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">Welcome Back!</h1>
                 <p style="font-size: 14px; margin-bottom: 24px;">
                   To keep connected with us please login with your personal info
                 </p>
                 <button type="button" class="ghost" id="signIn">Sign In</button>
               </div>
             </div>
+            <!-- Overlay Right Panel -->
             <div class="overlay-panel overlay-right">
-              <div
-                style="
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  bottom: 0;
-                  background: rgba(255, 255, 255, 0.1);
-                "
-              ></div>
+              <div style="position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(255,255,255,0.1);"></div>
               <div style="position: relative; z-index: 10;">
-                <div
-                  style="
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 8px;
-                    background: rgba(255, 255, 255, 0.1);
-                    border-radius: 50%;
-                    margin-bottom: 16px;
-                  "
-                >
-                  <!-- BookOpen Icon -->
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M2 7h20v34H2z" />
-                    <path d="M24 7h20v34H24z" />
+                <div style="display: inline-flex; align-items: center; justify-content: center; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 50%; margin-bottom: 16px;">
+                  <!-- Book Icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 7h20v34H2z"/>
+                    <path d="M24 7h20v34H24z"/>
                   </svg>
                 </div>
-                <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">
-                  Hello, Friend!
-                </h1>
+                <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">Hello, Friend!</h1>
                 <p style="font-size: 14px; margin-bottom: 24px;">
                   Enter your personal details and start your journey with us
                 </p>
@@ -578,7 +479,6 @@
       </footer>
     </div>
     <script>
-      // Toggle container class on button clicks
       document.getElementById("signUp").addEventListener("click", function () {
         document.getElementById("container").classList.add("right-panel-active");
       });

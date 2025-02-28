@@ -1,103 +1,351 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-body{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #ffffff;
-}
-.wrapper{
-    width: 420px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-.wrapper h1{
-    font-size: 36px;
-    text-align: center;
-}
-.wrapper .input-box{
-    position: relative;
-    width: 100%;
-    height: 52px;
-    margin: 25px 0;
-}
-.input-box input{
-    width: 100%;
-    height: 100%;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    padding: 0 15px;
-    font-size: 16px;
-}
-.input-box label{
-    position: absolute;
-    top:50%;
-    left: 15px;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: #333;
-    pointer-events: none;
-    transition: .5s;
-}
-.input-box input:focus ~ label,
-.input-box input:valid ~ label{
-    top: -5px;
-}
-.input-box i{
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
-    color: #333;
-}
-.remember-forgot{
-    margin: -15px 0 15px 0;
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-}
-.remember-forgot label input{
-    accent-color: #333;
-    margin-right: 3px;
-}
-.remember-forgot a{
-    color: #333;
-    text-decoration: none;
-}
-.remember-forgot a:hover{
-    text-decoration: underline;
-}
-button{
-    width: 100%;
-    height: 45px;
-    background: #333;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    color: #fff;
-    font-weight: 500;
-}
-.register-link{
-    font-size: 14.5px;
-    text-align: center;
-    margin: 20px 0 15px 0;
-}
-.register-link p a{
-    color: #333;
-    text-decoration: none;
-    font-weight: 600;
-}
-.register-link p a:hover{
-    text-decoration: underline;
-}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book Review - Sign in/up</title>
+    <style>
+      /* Fonts */
+      @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+      @import url('https://fonts.googleapis.com/css?family=Roboto:500');
+
+      /* Reset & Global Styles */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-image: linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px);
+        background-size: 20px 20px;
+        background-position: -1px -1px;
+      }
+      button:focus {
+        outline: none;
+      }
+      button:active {
+        transform: scale(0.95);
+      }
+
+      /* Container & Layout */
+      .container-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 16px;
+      }
+      .container {
+        position: relative;
+        width: 800px;
+        min-height: 480px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      /* Form Containers */
+      .form-container {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 50%;
+        transition: all 0.6s ease-in-out;
+      }
+      .sign-in-container {
+        left: 0;
+        z-index: 2;
+      }
+      .sign-up-container {
+        left: 0;
+        opacity: 0;
+        z-index: 1;
+      }
+        transition: transform 0.6s ease-in-out;
+      }
+      .container.right-panel-active .overlay {
+        transform: translateX(50%);
+      }
+      .overlay-panel {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        text-align: center;
+        top: 0;
+        height: 100%;
+        width: 50%;
+        transition: transform 0.6s ease-in-out;
+      }
+      .overlay-left {
+        transform: translateX(-20%);
+      }
+      .container.right-panel-active .overlay-left {
+        transform: translateX(0);
+      }
+      .overlay-right {
+        right: 0;
+        transform: translateX(0);
+      }
+      .container.right-panel-active .overlay-right {
+        transform: translateX(20%);
+      }
+
+      /* Form Styling */
+      form {
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 48px;
+        height: 100%;
+        text-align: center;
+      }
+      form input {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        margin: 8px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+      }
+      .input-container {
+        position: relative;
+        width: 100%;
+        margin: 8px 0;
+      }
+      .input-container svg {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+      }
+      a {
+        color: #6b7280;
+        font-size: 14px;
+        text-decoration: none;
+        margin: 16px 0;
+      }
+
+      /* Action Buttons (Sign In/Up) */
+      .action-button {
+        border: 1px solid #374151;
+        border-radius: 50px;
+        background: linear-gradient(to right, #374151, #1f2937);
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 12px 40px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        cursor: pointer;
+        margin-top: 16px;
+      }
+      .action-button:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .action-button:active {
+        transform: scale(0.95);
+      }
+      .action-button:focus {
+        outline: none;
+      }
+
+      /* Google Sign-In Button Styles */
+      .gsi-material-button {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        -webkit-appearance: none;
+        background-color: #f2f2f2;
+        background-image: none;
+        border: none;
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        color: #1f1f1f;
+        cursor: pointer;
+        font-family: 'Roboto', arial, sans-serif;
+        font-size: 14px;
+        height: 40px;
+        letter-spacing: 0.25px;
+        outline: none;
+        overflow: hidden;
+        padding: 0 12px;
+        position: relative;
+        text-align: center;
+        -webkit-transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
+        transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
+        vertical-align: middle;
+        white-space: nowrap;
+        width: auto;
+        max-width: 400px;
+        min-width: min-content;
+        margin: auto;
+      }
+      .gsi-material-button .gsi-material-button-icon {
+        height: 20px;
+        margin-right: 12px;
+        min-width: 20px;
+        width: 20px;
+      }
+      .gsi-material-button .gsi-material-button-content-wrapper {
+        -webkit-align-items: center;
+        align-items: center;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -webkit-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+        height: 100%;
+        justify-content: space-between;
+        position: relative;
+        width: 100%;
+      }
+      .gsi-material-button .gsi-material-button-contents {
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        font-family: 'Roboto', arial, sans-serif;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: top;
+      }
+      .gsi-material-button .gsi-material-button-state {
+        -webkit-transition: opacity 0.218s;
+        transition: opacity 0.218s;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      .gsi-material-button:disabled {
+        cursor: default;
+        background-color: #ffffff61;
+      }
+      .gsi-material-button:disabled .gsi-material-button-state {
+        background-color: #1f1f1f1f;
+      }
+      .gsi-material-button:disabled .gsi-material-button-contents {
+        opacity: 38%;
+      }
+      .gsi-material-button:disabled .gsi-material-button-icon {
+        opacity: 38%;
+      }
+      .gsi-material-button:not(:disabled):active .gsi-material-button-state,
+      .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+        background-color: #001d35;
+        opacity: 12%;
+      }
+      .gsi-material-button:not(:disabled):hover {
+        -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+          0 1px 3px 1px rgba(60, 64, 67, 0.15);
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+          0 1px 3px 1px rgba(60, 64, 67, 0.15);
+      }
+      .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+        background-color: #001d35;
+        opacity: 8%;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        background: #1f2937;
+        color: #fff;
+        font-size: 14px;
+        padding: 8px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+            <button type="button" class="action-button">Sign Up</button>
+            <button type="button" class="action-button">Sign In</button>
+          </form>
+        </div>
+
+        <!-- Overlay Container -->
+        <div class="overlay-container">
+          <div class="overlay">
+            <!-- Overlay Left Panel -->
+            <div class="overlay-panel overlay-left">
+              <div style="position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(255,255,255,0.1);"></div>
+              <div style="position: relative; z-index: 10;">
+                <div style="display: inline-flex; align-items: center; justify-content: center; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 50%; margin-bottom: 16px;">
+                  <!-- BookOpen Icon -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M2 7h20v34H2z" />
+                    <path d="M24 7h20v34H24z" />
+                  </svg>
+                </div>
+                <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">Welcome Back!</h1>
+                <p style="font-size: 14px; margin-bottom: 24px;">
+                  To keep connected with us please login with your personal info
+                </p>
+                <button type="button" class="ghost action-button" id="signIn">Sign In</button>
+              </div>
+            </div>
+            <!-- Overlay Right Panel -->
+            <div class="overlay-panel overlay-right">
+              <div style="position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(255,255,255,0.1);"></div>
+              <div style="position: relative; z-index: 10;">
+                <div style="display: inline-flex; align-items: center; justify-content: center; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 50%; margin-bottom: 16px;">
+                  <!-- BookOpen Icon -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M2 7h20v34H2z" />
+                    <path d="M24 7h20v34H24z" />
+                  </svg>
+                </div>
+                <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">Hello, Friend!</h1>
+                <p style="font-size: 14px; margin-bottom: 24px;">
+                  Enter your personal details and start your journey with us
+                </p>
+                <button type="button" class="ghost action-button" id="signUp">Sign Up</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <p>© 2025 Book Review. All rights reserved.</p>
+      </footer>
+    </div>
+    <script>
+      document.getElementById("signUp").addEventListener("click", function () {
+        document.getElementById("container").classList.add("right-panel-active");
+      });
+      document.getElementById("signIn").addEventListener("click", function () {
+        document.getElementById("container").classList.remove("right-panel-active");
+      });
+    </script>
+  </body>
+</html>
